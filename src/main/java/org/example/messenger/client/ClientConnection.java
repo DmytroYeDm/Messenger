@@ -11,13 +11,9 @@ public class ClientConnection {
     private PrintWriter out;
     private BufferedReader in;
     public ClientConnection() throws IOException {
-        try {
-            clientSocket = new Socket("localhost", 8080);
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        } catch (IOException e) {
-            System.err.println("Помилка при створенні з'єднання: " + e.getMessage());;
-        }
+        clientSocket = new Socket("localhost", 8080);
+        out = new PrintWriter(clientSocket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
     public Socket getClientSocket() {
         return clientSocket;
