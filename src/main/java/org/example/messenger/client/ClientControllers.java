@@ -86,11 +86,16 @@ public class ClientControllers {
                     }
                 });
             } catch (IOException e) {
-                Stage stage = (Stage) wantToLoginButton.getScene().getWindow();
-                sceneLoader.loadProblemScene("/org/example/messenger/client/serverProblem.fxml", stage, "Problem");
+                Platform.runLater(() -> {
+                    wantToLoginButton.setDisable(true);
+                    wantToRegisterButton.setDisable(true);
+                    usernameField.setDisable(true);
+                    passwordField.setDisable(true);
+                    Stage stage = (Stage) wantToLoginButton.getScene().getWindow();
+                    sceneLoader.loadProblemScene("/org/example/messenger/client/serverProblem.fxml", stage, "Problem");
+                });
             }
         }).start();
-
     }
 
     @FXML
@@ -126,8 +131,15 @@ public class ClientControllers {
                 });
 
             } catch (IOException e) {
-                Stage stage = (Stage) registerButton.getScene().getWindow();
-                sceneLoader.loadProblemScene("/org/example/messenger/client/serverProblem.fxml", stage, "Problem");
+                Platform.runLater(() -> {
+                    registerButton.setDisable(true);
+                    returnButton.setDisable(true);
+                    registerUsernameField.setDisable(true);
+                    registerPasswordField.setDisable(true);
+                    repeatRegisterPasswordField.setDisable(true);
+                    Stage stage = (Stage) registerButton.getScene().getWindow();
+                    sceneLoader.loadProblemScene("/org/example/messenger/client/serverProblem.fxml", stage, "Problem");
+                });
             }
         }).start();
     }

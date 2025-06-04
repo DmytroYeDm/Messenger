@@ -19,7 +19,7 @@ public class SceneLoader {
             currentStage.setScene(new Scene(root));
             currentStage.setTitle(title);
             currentStage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Помилка при завантаженні сторінки з проблемою: " + e.getMessage());
         }
     }
@@ -36,7 +36,7 @@ public class SceneLoader {
             stage.setScene(scene);
             stage.setTitle(title);
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Помилка при завантаженні сторінки: " + e.getMessage());
         }
     }

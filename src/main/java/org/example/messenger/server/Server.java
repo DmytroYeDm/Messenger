@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +24,7 @@ import org.example.messenger.models.User;
 
 public class Server implements Runnable {
     private final int PORT = 8080;
+    private final List<ConnectionHandler> allClients = Collections.synchronizedList(new ArrayList<>());
     private final Map<String, ConnectionHandler> activeClients = new ConcurrentHashMap<>();
     private Consumer<String> logConsumer;
     private volatile boolean running = true;
@@ -45,7 +48,9 @@ public class Server implements Runnable {
             while (running) {
                 try {
                     Socket client = server.accept();
-                    new Thread(new ConnectionHandler(client)).start();
+                    ConnectionHandler handler = new ConnectionHandler(client);
+                    new Thread(handler).start();
+                    allClients.add(handler);
                 } catch (IOException e) {
                     if (running) {
                         log("Помилка під час підключення клієнта: " + e.getMessage());
@@ -74,7 +79,7 @@ public class Server implements Runnable {
         } catch (IOException e) {
             log("Помилка при закритті сервера: " + e.getMessage());
         }
-        for (ConnectionHandler handler : activeClients.values()) {
+        for (ConnectionHandler handler : allClients) {
             handler.closeConnection();
         }
     }
@@ -235,7 +240,5 @@ public class Server implements Runnable {
                 }
             }
         }
-
-
     }
 }

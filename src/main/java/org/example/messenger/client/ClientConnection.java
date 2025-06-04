@@ -20,10 +20,12 @@ public class ClientConnection {
     }
 
     public synchronized void sendMessage(String message) throws IOException{
-        out.println(message);
         if (out.checkError()) {
             throw new IOException("Сервер закрито");
+        } else {
+            out.println(message);
         }
+
     }
 
     public String readMessage() throws IOException {
