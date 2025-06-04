@@ -8,7 +8,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateSessionFactoryUtil {
     private static volatile SessionFactory sessionFactory;
-
     public HibernateSessionFactoryUtil() {
 
     }
